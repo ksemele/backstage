@@ -245,7 +245,11 @@ Apply the PostgreSQL deployment to the Kubernetes cluster:
 ```shell
 $ kubectl apply -f kubernetes/postgres.yaml
 deployment.apps/postgres created
+```
 
+You can check the status of Postgres Pods (NAME can have a different postfix after `postgres-`):
+
+```shell
 $ kubectl get pods --namespace=backstage
 NAME                        READY   STATUS    RESTARTS   AGE
 postgres-56c86b8bbc-66pt2   1/1     Running   0          21s
@@ -254,11 +258,11 @@ postgres-56c86b8bbc-66pt2   1/1     Running   0          21s
 Verify the deployment by connecting to the pod:
 
 ```shell
-$ kubectl exec -it --namespace=backstage postgres-56c86b8bbc-66pt2 -- /bin/bash
-bash-5.1# psql -U $POSTGRES_USER
+$ kubectl exec -it --namespace=backstage $(kubectl get po --no-headers --namespace=backstage -l app=postgres) -- /bin/bash -c 'psql -U $POSTGRES_USER'
 psql (13.2)
+Type "help" for help.
+
 backstage=# \q
-bash-5.1# exit
 ```
 
 ### Creating a PostgreSQL service
