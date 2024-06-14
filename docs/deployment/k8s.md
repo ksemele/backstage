@@ -47,6 +47,12 @@ $ kubectl get pods -A
 When you're done with the tutorial, use `minikube stop` to halt the cluster and
 free up resources.
 
+Also, all files below using `kubernetes` directory. Create it first:
+
+```shell
+mkdir -p kubernetes
+```
+
 ## Creating a namespace
 
 Deployments in Kubernetes are commonly assigned to their own
@@ -139,7 +145,6 @@ metadata:
   labels:
     type: local
 spec:
-  storageClassName: manual
   capacity:
     storage: 2G
   accessModes:
@@ -154,7 +159,6 @@ metadata:
   name: postgres-storage-claim
   namespace: backstage
 spec:
-  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:
